@@ -15,16 +15,25 @@ Build Graph RAG-ready KB folders, enrich YAML frontmatter, lint with `kb_lint.py
 npx skills add augmentableai/tpsreport-skill -y
 ```
 
+Repo layout (agentskill.sh expects `skills/{name}/SKILL.md`):
+
+```text
+skills/tpsreport-skill/
+├── SKILL.md
+├── scripts/kb_lint.py
+└── references/
+```
+
 ```bash
 # Cursor (project)
-cp -r . .cursor/skills/tpsreport-skill/
+cp -r skills/tpsreport-skill/ .cursor/skills/tpsreport-skill/
 pip install pyyaml
 ```
 
 ## Validate a KB
 
 ```bash
-python scripts/kb_lint.py /path/to/Your_KB/
+python skills/tpsreport-skill/scripts/kb_lint.py /path/to/Your_KB/
 ```
 
 ## Also available in
