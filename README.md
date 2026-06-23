@@ -1,6 +1,11 @@
 # TPSReport Skill
 
-**Official agent skill for [TPSReport](https://tpsreport.pro) + [Obsidian](https://obsidian.md) knowledge bases.**
+[![skills.sh](https://skills.sh/b/augmentableai/tpsreport-skill)](https://skills.sh/augmentableai/tpsreport-skill)
+[![TPSReport](https://img.shields.io/badge/TPSReport-tpsreport.pro-2563eb?style=flat-square)](https://tpsreport.pro)
+[![Obsidian plugin](https://img.shields.io/badge/Obsidian-Community%20Plugin-7c3aed?style=flat-square)](https://community.obsidian.md/plugins/tpsreport-sync)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+
+**TPSReport by [Augmentable.ai](https://augmentable.ai)** — official agent skill for [TPSReport](https://tpsreport.pro) + [Obsidian](https://obsidian.md) knowledge bases.
 
 Build Graph RAG-ready KB folders, enrich YAML frontmatter, lint with `kb_lint.py`, and sync via the [TPSReport Obsidian plugin](https://community.obsidian.md/plugins/tpsreport-sync).
 
@@ -26,17 +31,18 @@ python scripts/kb_lint.py /path/to/Your_KB/
 
 [TPSReport Obsidian plugin repo](https://github.com/augmentableai/tpsreport-obsidian-sync) (bundled copy at `tpsreport-skill/`)
 
-## Submit / list
+## Listings
 
-| Directory | URL |
-|-----------|-----|
-| agentskill.sh | [agentskill.sh/submit](https://agentskill.sh/submit) → `augmentableai/tpsreport-skill` |
-| skills.sh | `npx skills add augmentableai/tpsreport-skill -y` |
+| Directory | Link / command |
+|-----------|----------------|
+| **skills.sh** | [skills.sh/augmentableai/tpsreport-skill](https://skills.sh/augmentableai/tpsreport-skill) |
+| **agentskill.sh** | [agentskill.sh/submit](https://agentskill.sh/submit) → `augmentableai/tpsreport-skill` |
+| **Install** | `npx skills add augmentableai/tpsreport-skill -y` |
 
 ## Keywords
 
-TPSReport · Obsidian · knowledge base · Graph RAG · frontmatter · kb_lint · agent skill · tpsreport-sync
+TPSReport · Augmentable.ai · Obsidian · knowledge base · Graph RAG · frontmatter · kb_lint · agent skill · tpsreport-sync
 
 ## License
 
-MIT
+MIT · Copyright (c) Augmentable.ai
