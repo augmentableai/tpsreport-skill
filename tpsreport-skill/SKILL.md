@@ -1,15 +1,17 @@
 ---
 name: tpsreport-skill
 description: >-
-  TPSReport knowledge base skill for Obsidian — build, enrich, lint, and sync
+  TPSReport knowledge base skill for Obsidian. Build, enrich, lint, and sync
   Graph RAG-ready KB folders. Use when authoring TPSReport KBs, YAML frontmatter
   (summary, keywords, hyde_questions, retrieval_hint), kb_lint.py validation,
   or the TPSReport Obsidian plugin publish/push workflow.
 license: MIT
-compatibility: Requires Python 3.9+ and PyYAML for kb_lint.py. Pairs with the TPSReport Obsidian community plugin and a TPSReport account.
+compatibility: >-
+  Requires Python 3.9+ and PyYAML for kb_lint.py. Pairs with the TPSReport
+  Obsidian community plugin and a TPSReport account.
 metadata:
   author: Augmentable.ai
-  version: "1.1.0"
+  version: "1.1.1"
   product: TPSReport
   plugin: tpsreport-sync
   brand: TPSReport by Augmentable.ai

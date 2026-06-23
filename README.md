@@ -17,14 +17,14 @@ npx skills add augmentableai/tpsreport-skill -y
 
 ```bash
 # Cursor (project)
-cp -r . .cursor/skills/tpsreport-skill/
+cp -r tpsreport-skill/ .cursor/skills/tpsreport-skill/
 pip install pyyaml
 ```
 
 ## Validate a KB
 
 ```bash
-python scripts/kb_lint.py /path/to/Your_KB/
+python tpsreport-skill/scripts/kb_lint.py /path/to/Your_KB/
 ```
 
 ## Also available in
