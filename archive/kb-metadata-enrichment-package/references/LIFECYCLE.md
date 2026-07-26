@@ -30,17 +30,20 @@ Phase 6  Test & Iterate
 2. Draft the body following `content_structure` and `llm_instructions`.
 3. Never invent numbers; keep guidance keys for provenance.
 
-## Phase 3 — Enrich RAG metadata
+## Phase 3 — Enrich RAG + web SEO metadata
 
 1. Read the full body; classify doc type.
 2. Extract nouns into `keywords`, `entities`, `brands`.
-3. Author frontmatter per [METADATA.md](METADATA.md): strong `summary`, 8–20 `keywords`, 4–8 `hyde_questions`, shared `intents`, negative clause in `retrieval_hint`, correct `see_also` / `defers_to` slugs.
-4. Light body polish only when thin — preserve voice on finished docs.
+3. Author RAG frontmatter per [METADATA.md](METADATA.md): strong `summary`, 8–20 `keywords`, 4–8 `hyde_questions`, shared `intents`, negative clause in `retrieval_hint`, correct `see_also` / `defers_to` slugs.
+4. Author **web SEO frontmatter** on the same doc:
+   - **`description`** (required, 50–160 chars) — compelling meta for public pages; not the same text as `summary`.
+   - Optional: `seo_title`, `seo_description`, `og_image` when you need overrides.
+5. Light body polish only when thin — preserve voice on finished docs.
 
 ## Phase 4 — Validate
 
 ```bash
-python scripts/kb_lint.py <kb-folder>
+python references/kb_lint.py <kb-folder>
 ```
 
 Fix every error; re-run until exit 0. The plugin Gatekeeper enforces the same rules at sync.

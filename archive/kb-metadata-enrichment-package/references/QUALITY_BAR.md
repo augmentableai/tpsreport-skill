@@ -1,9 +1,9 @@
-# Quality bar (enforced by scripts/kb_lint.py)
+# Quality bar (enforced by references/kb_lint.py)
 
 Run the linter — do not self-grade:
 
 ```bash
-python scripts/kb_lint.py <kb-folder>
+python references/kb_lint.py <kb-folder>
 ```
 
 A green exit code is the definition of "passes the Quality Bar."

@@ -64,6 +64,17 @@ author_keys:
   - topic
   - tags
 
+# Web SEO keys (stored in document frontmatter; consumed by public SSR / GlobalSEO).
+# Required on every content doc so published pages have indexable meta tags.
+seo_keys:
+  - description
+  - seo_title
+  - seo_description
+  - og_title
+  - og_description
+  - og_image
+  - cover
+
 # Plugin-managed bookkeeping. NEVER hand-edit. The linter only flags these when
 # they are malformed; it never requires or rewrites them.
 plugin_managed_keys:
@@ -85,6 +96,10 @@ required_core:
   - retrieval_hint
   - intents
   - scenarios
+
+# Minimum web SEO every content doc must carry (index/guidance/template exempt).
+required_seo:
+  - description
 
 # Keys whose values must resolve to real file slugs that exist in the KB.
 #   defers_to:  map of  aspect -> slug
@@ -113,6 +128,12 @@ synonyms:
   entity: entities
   brand: brands
   topic_list: topics
+  meta_title: seo_title
+  meta_description: seo_description
+  og:image: og_image
+  social_image: og_image
+  cover_image: og_image
+  image: og_image
 
 # Per-key value rules enforced on content docs.
 rules:
@@ -150,6 +171,32 @@ rules:
     type: map
   canonical_for:
     type: str_or_list
+  description:
+    type: str
+    min_chars: 50
+    max_chars: 160
+  seo_title:
+    type: str
+    min_chars: 10
+    max_chars: 70
+  seo_description:
+    type: str
+    min_chars: 50
+    max_chars: 160
+  og_title:
+    type: str
+    min_chars: 10
+    max_chars: 70
+  og_description:
+    type: str
+    min_chars: 50
+    max_chars: 160
+  og_image:
+    type: str
+    min_chars: 8
+  cover:
+    type: str
+    min_chars: 8
 
 # ---------------------------------------------------------------------------
 # EXTENSIBILITY — per-KB custom fields (any subject matter)
@@ -206,8 +253,10 @@ severity:
     - BOM_PRESENT
     - UNKNOWN_KEY
     - MISSING_CORE_KEY
+    - MISSING_SEO_KEY
     - LIST_LEN
     - SUMMARY_TOO_SHORT
+    - SEO_TOO_LONG
     - NO_NEGATIVE_CLAUSE
     - CANARY_MISMATCH
     - EMPTY_VALUE

@@ -2,6 +2,15 @@
 
 Authoritative key lists live in the [Obsidian plugin `main.js`](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/main.js). Machine-readable contract: [metadata-contract.yaml](metadata-contract.yaml).
 
+## Two layers on every content doc
+
+| Layer | Purpose | Validated by |
+|-------|---------|--------------|
+| **RAG core** | Agent retrieval routing | `required_core` in contract |
+| **Web SEO core** | Public page `<title>`, meta description, OG tags | `required_seo` in contract |
+
+`summary` is for **retrieval**, not a substitute for `description`. Always author both.
+
 ## RAG keys (`RAG_FM_KEYS`)
 
 | Key | Type | Purpose |
@@ -26,12 +35,34 @@ Authoritative key lists live in the [Obsidian plugin `main.js`](https://github.c
 | `audience` | string/list | Who the doc is for. |
 | `metadata_canary` | string | Optional sentinel token to verify metadata round-trips through indexing. |
 
-**Bookkeeping keys**
+Every **content** doc gets the RAG core set: `summary`, `keywords`, `tags`, `intents`, `hyde_questions`, `retrieval_hint`, `scenarios`.
 
-- Author-owned: `title`, `description`, `date`, `topic`, `see_also` (list of `{file, reason}`).
+## Web SEO keys (`seo_keys`)
+
+Stored in document frontmatter; synced to Mongo; read by SSR (`buildResourcesDocumentSeo` → `GlobalSEO`).
+
+| Key | Required | Purpose |
+|-----|----------|---------|
+| `description` | **Yes** | Meta description for search/social (50–160 chars). Plain-language hook with concrete nouns. |
+| `seo_title` | No | Override `<title>` when different from `title` (≤70 chars). |
+| `seo_description` | No | Override meta/OG description when different from `description`. |
+| `og_title` | No | Override Open Graph title (defaults to seo/title). |
+| `og_description` | No | Override Open Graph description. |
+| `og_image` | No | Absolute or site-relative social preview image URL. |
+| `cover` | No | Alias for hero/social image when `og_image` omitted. |
+
+**Priority on the public site (SSR):**
+
+- Title: `seo_title` → `title` → node title
+- Description: `seo_description` → `description` → `summary` → route fallback
+- Image: `og_image` → `cover` → dynamic `/og/social` card
+
+**Synonym traps (linter flags these):** `meta_title` → `seo_title`, `meta_description` → `seo_description`, `social_image` / `cover_image` / `image` → `og_image`.
+
+## Bookkeeping keys
+
+- Author-owned structural: `title`, `date`, `topic`, `see_also` (list of `{file, reason}`).
 - Plugin-managed (NEVER hand-edit): `node_id`, `sync_status`, `last_synced`, `tps_content_hash`.
-
-Every doc gets the core set: `summary`, `keywords`, `tags`, `intents`, `hyde_questions`, `retrieval_hint`, `scenarios`.
 
 ## Per-KB custom fields
 
@@ -54,6 +85,8 @@ Companion classifiers: `index_type`, `guidance_type`.
 
 | Audience | Tool | Python? |
 |----------|------|---------|
-| Authoring agent | [kb_lint.py](../scripts/kb_lint.py) | Yes — dev/CI only |
+| Authoring agent | [kb_lint.py](kb_lint.py) | Yes — dev/CI only |
 | End client | Obsidian plugin Gatekeeper | No |
 | Server | backend `/validate` on push | Server-side |
+
+All three enforce the same contract in [metadata-contract.yaml](metadata-contract.yaml).

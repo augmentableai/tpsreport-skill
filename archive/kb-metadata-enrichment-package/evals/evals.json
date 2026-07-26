@@ -1,0 +1,14 @@
+{
+  "skill_name": "tpsreport-knowledge-base-generation",
+  "evals": [
+    {
+      "id": "kb-lint-workflow",
+      "prompt": "I finished enriching frontmatter on my TPSReport Obsidian KB. What should I run before push?",
+      "expected_output": "Run kb_lint.py on the KB folder and fix errors until exit 0 before syncing via the TPSReport Obsidian plugin.",
+      "assertions": [
+        "The response mentions kb_lint.py or linting frontmatter before push.",
+        "The response mentions TPSReport frontmatter keys such as summary, keywords, or hyde_questions."
+      ]
+    }
+  ]
+}

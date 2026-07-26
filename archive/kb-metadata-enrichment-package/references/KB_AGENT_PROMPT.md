@@ -1,8 +1,8 @@
 # KB Agent Prompt Template
 
-Copy-paste prompt for Cursor, Claude Code, Codex, or any agent that supports project skills.
+Copy-paste prompt for Claude Code, Codex, or any agent that supports project skills.
 
-**Skill location (this repo):** [`tpsreport-skill/`](../)  
+**Skill location (this repo):** [`tpsreport-knowledge-base-generation/`](../)  
 **Examples:** [`../examples/`](../examples/) · **Workflow:** [`../WORKFLOW.md`](../WORKFLOW.md)  
 **Official plugin listing:** [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync)
 
@@ -20,9 +20,9 @@ Voice/tone: **[e.g. technical practitioner, plain-language professional, blunt t
 Output vault folder: **`[Your_Vault]/[Folder_Name]/`**
 
 ## Mandatory: read and follow the skill
-1. Read `.cursor/skills/tpsreport-skill/SKILL.md` in full before writing anything.
-   (Install from https://github.com/augmentableai/tpsreport-obsidian-sync/tree/main/tpsreport-skill if missing.)
-2. Treat `metadata-contract.yaml` in the same folder as the single source of truth for frontmatter keys.
+1. Read `SKILL.md` in this skill package in full before writing anything.
+   (Install: `npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y`)
+2. Treat `references/metadata-contract.yaml` as the single source of truth for frontmatter keys.
 3. Do NOT invent synonym keys (`questions` → use `hyde_questions`; `tldr` → use `summary`).
 
 ## Lifecycle — execute all phases unless told otherwise
@@ -58,7 +58,7 @@ Add when relevant: `canonical_for`, `defers_to` (values = **file slugs**), `life
 ### Phase 4 — Validate (non-negotiable)
 Run until exit code 0:
 ```bash
-python .cursor/skills/tpsreport-skill/kb_lint.py [Your_Vault]/[Folder_Name]/
+python references/kb_lint.py [Your_Vault]/[Folder_Name]/
 ```
 Fix every **error**; address **warnings**. Re-run until clean. Do not declare done while linter is red.
 
@@ -96,13 +96,13 @@ Begin by reading the skill, proposing the section map for **[TOPIC]**, then impl
 
 ```bash
 # Lint the KB (must exit 0)
-python .cursor/skills/tpsreport-skill/kb_lint.py path/to/Your_KB/
+python references/kb_lint.py path/to/Your_KB/
 
 # Strict mode (warnings = failure)
-python .cursor/skills/tpsreport-skill/kb_lint.py path/to/Your_KB/ --strict
+python references/kb_lint.py path/to/Your_KB/ --strict
 
 # JSON output for programmatic fix loops
-python .cursor/skills/tpsreport-skill/kb_lint.py path/to/Your_KB/ --json
+python references/kb_lint.py path/to/Your_KB/ --json
 ```
 
 ---

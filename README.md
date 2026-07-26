@@ -1,56 +1,42 @@
-# TPSReport Skill
+# TPSReport Skill — moved
 
-[![skills.sh](https://skills.sh/b/augmentableai/tpsreport-skill)](https://skills.sh/augmentableai/tpsreport-skill)
+> **This repo is retired.** The skill now lives in the Augmentable.ai skills hub,
+> together with the renderer and everything else:
+>
+> ### 👉 [github.com/augmentableai/skills](https://github.com/augmentableai/skills)
+
 [![TPSReport](https://img.shields.io/badge/TPSReport-tpsreport.pro-2563eb?style=flat-square)](https://tpsreport.pro)
-[![Obsidian plugin](https://img.shields.io/badge/Obsidian-Community%20Plugin-7c3aed?style=flat-square)](https://community.obsidian.md/plugins/tpsreport-sync)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-**TPSReport by [Augmentable.ai](https://augmentable.ai)** — official agent skill for [TPSReport](https://tpsreport.pro) + [Obsidian](https://obsidian.md) knowledge bases.
+## What changed
 
-Build Graph RAG-ready KB folders, enrich YAML frontmatter, lint with `kb_lint.py`, and sync via the [TPSReport Obsidian plugin](https://community.obsidian.md/plugins/tpsreport-sync).
-
-## Install
-
-```bash
-npx skills add augmentableai/tpsreport-skill -y
-```
-
-Repo layout (agentskill.sh expects `skills/{name}/SKILL.md`):
-
-```text
-skills/tpsreport-skill/
-├── SKILL.md
-├── scripts/kb_lint.py
-└── references/
-```
+`tpsreport-skill` is now **`tpsreport-author`**, published from the hub. Same skill,
+clearer name, and it no longer lives in three places under three names.
 
 ```bash
-# Cursor (project)
-cp -r skills/tpsreport-skill/ .cursor/skills/tpsreport-skill/
-pip install pyyaml
+# new
+npx skills add augmentableai/skills --skill tpsreport-author -y
+
+# and the renderer that ships alongside it
+npx skills add augmentableai/skills --skill vault-viewer -y
 ```
 
-## Validate a KB
+Prefer no install at all? Connect the
+[TPSReport MCP server](https://github.com/augmentableai/tpsreport-mcp) — it serves
+these same skill packages on demand (`get_skill`), plus a server-side validator.
 
-```bash
-python skills/tpsreport-skill/scripts/kb_lint.py /path/to/Your_KB/
-```
+## The TPSReport stack
 
-## Also available in
+| # | Piece | Role |
+|---|---|---|
+| 1 | [`augmentableai/skills`](https://github.com/augmentableai/skills) | **Author** — authoring + linting + rendering skills |
+| 2 | [`tpsreport-obsidian-sync`](https://github.com/augmentableai/tpsreport-obsidian-sync) | **Sync** — Obsidian plugin, vault ↔ cloud |
+| 3 | [`tpsreport-mcp`](https://github.com/augmentableai/tpsreport-mcp) | **Operate** — MCP server: serves the skills + recall/remember |
 
-[TPSReport Obsidian plugin repo](https://github.com/augmentableai/tpsreport-obsidian-sync) (bundled copy at `tpsreport-skill/`)
+## `archive/`
 
-## Listings
-
-| Directory | Link / command |
-|-----------|----------------|
-| **skills.sh** | [skills.sh/augmentableai/tpsreport-skill](https://skills.sh/augmentableai/tpsreport-skill) |
-| **agentskill.sh** | [agentskill.sh/submit](https://agentskill.sh/submit) → `augmentableai/tpsreport-skill` |
-| **Install** | `npx skills add augmentableai/tpsreport-skill -y` |
-
-## Keywords
-
-TPSReport · Augmentable.ai · Obsidian · knowledge base · Graph RAG · frontmatter · kb_lint · agent skill · tpsreport-sync
+Kept for history only — a superseded variant of the skill package. Do not use it;
+the hub is the source of truth.
 
 ## License
 

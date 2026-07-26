@@ -42,7 +42,7 @@ except ImportError:  # pragma: no cover
     sys.stderr.write("kb_lint.py requires PyYAML (pip install pyyaml)\n")
     sys.exit(2)
 
-CONTRACT_PATH = Path(__file__).resolve().parent.parent / "references" / "metadata-contract.yaml"
+CONTRACT_PATH = Path(__file__).resolve().parent / "metadata-contract.yaml"
 
 
 # --------------------------------------------------------------------------- #
@@ -63,8 +63,10 @@ class Contract:
     guidance_keys: set = field(default_factory=set)
     classifier_keys: set = field(default_factory=set)
     author_keys: set = field(default_factory=set)
+    seo_keys: set = field(default_factory=set)
     plugin_managed_keys: set = field(default_factory=set)
     required_core: list = field(default_factory=list)
+    required_seo: list = field(default_factory=list)
     xref_keys: list = field(default_factory=list)
     synonyms: dict = field(default_factory=dict)
     rules: dict = field(default_factory=dict)
@@ -79,6 +81,7 @@ class Contract:
             | self.guidance_keys
             | self.classifier_keys
             | self.author_keys
+            | self.seo_keys
             | self.plugin_managed_keys
         )
 
@@ -95,8 +98,10 @@ def load_contract(path: Path = CONTRACT_PATH) -> Contract:
         guidance_keys=set(data.get("guidance_keys") or []),
         classifier_keys=set(data.get("classifier_keys") or []),
         author_keys=set(data.get("author_keys") or []),
+        seo_keys=set(data.get("seo_keys") or []),
         plugin_managed_keys=set(data.get("plugin_managed_keys") or []),
         required_core=list(data.get("required_core") or []),
+        required_seo=list(data.get("required_seo") or []),
         xref_keys=list(data.get("xref_keys") or []),
         synonyms=dict(data.get("synonyms") or {}),
         rules=dict(data.get("rules") or {}),
@@ -462,6 +467,14 @@ def lint(root: Path, contract: Contract, lint_all: bool = False) -> tuple[list[F
                 findings.append(Finding("EMPTY_VALUE", "warning", rel,
                                         f"core key `{key}` is present but empty."))
 
+        for key in contract.required_seo:
+            if key not in fm:
+                findings.append(Finding("MISSING_SEO_KEY", "warning", rel,
+                                        f"missing required web SEO key `{key}`."))
+            elif is_empty(fm.get(key)):
+                findings.append(Finding("MISSING_SEO_KEY", "warning", rel,
+                                        f"web SEO key `{key}` is present but empty."))
+
         # Per-KB custom fields declared in 00_CONTEXT kb_schema
         for ckey, cspec in kb_schema.items():
             cspec = cspec if isinstance(cspec, dict) else {}
@@ -509,6 +522,9 @@ def lint(root: Path, contract: Contract, lint_all: bool = False) -> tuple[list[F
                     code = "SUMMARY_TOO_SHORT" if key == "summary" else "EMPTY_VALUE"
                     findings.append(Finding(code, "warning", rel,
                                             f"`{key}` is {len(val.strip())} chars; want >= {spec['min_chars']}."))
+                if "max_chars" in spec and len(val.strip()) > spec["max_chars"]:
+                    findings.append(Finding("SEO_TOO_LONG", "warning", rel,
+                                            f"`{key}` is {len(val.strip())} chars; want <= {spec['max_chars']}."))
                 must = spec.get("must_contain_any")
                 if must:
                     low = val.lower()
